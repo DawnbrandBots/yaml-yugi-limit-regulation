@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "css-select": "^5.1.0",
-    "got": "^11.8.6",
+    "got": "^12.6.1",
     "htmlparser2": "^9.0.0"
   },
   "devDependencies": {
