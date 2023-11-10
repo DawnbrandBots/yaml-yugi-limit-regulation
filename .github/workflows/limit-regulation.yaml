@@ -88,4 +88,4 @@ jobs:
       - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
-          working-directory: yaml-yugi
+          working-directory: yaml-yugi-limit-regulation

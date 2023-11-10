@@ -9,4 +9,10 @@ collection of Forbidden & Limited Lists and Limit Regulations, found under [`/da
 The remaining files — the actual source code of this stage of the pipeline — are available under the
 GNU Affero General Public License 3.0 or later. See [COPYING](./COPYING) for more details.
 
-2022-05-23 is actually 2022-05-17
+In each data subdirectory, current.vector.json is a symlink pointing to the most recent effective Limit Regulation for
+that game version.
+
+The TCG list effective 2022-05-23 was actually effective [2022-05-17](https://yugipedia.com/wiki/May_2022_Lists_(TCG)),
+but Konami retconned this in its reported data at some point for some unknown reason. Fetch history:
+- https://github.com/DawnbrandBots/yaml-yugi/commits/master/data/limit-regulation/tcg/2022-05-17.raw.json
+- https://github.com/DawnbrandBots/yaml-yugi/commits/master/data/limit-regulation/tcg/2022-05-17.vector.json
