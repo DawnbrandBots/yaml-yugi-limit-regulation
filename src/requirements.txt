@@ -4,33 +4,15 @@
 #
 #    pip-compile
 #
-attrs==23.1.0
-    # via
-    #   jsonschema
-    #   referencing
 fastjsonschema==2.18.1
     # via -r requirements.in
-genson==1.2.2
-    # via -r requirements.in
-jsonschema==4.19.2
-    # via -r requirements.in
-jsonschema-specifications==2023.6.1
-    # via jsonschema
-referencing==0.29.1
-    # via
-    #   jsonschema
-    #   jsonschema-specifications
-regex==2023.6.3
+regex==2023.10.3
     # via wikitextparser
-rpds-py==0.8.10
-    # via
-    #   jsonschema
-    #   referencing
-ruamel-yaml==0.17.40
+ruamel-yaml==0.18.5
     # via -r requirements.in
-ruamel-yaml-clib==0.2.7
+ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
-wcwidth==0.2.6
+wcwidth==0.2.9
     # via wikitextparser
-wikitextparser==0.54.0
+wikitextparser==0.55.5
     # via -r requirements.in
