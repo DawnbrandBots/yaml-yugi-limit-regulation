@@ -1,9 +1,10 @@
-# SPDX-FileCopyrightText: © 2022 Kevin Lu
+# SPDX-FileCopyrightText: © 2022–2023 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 name: Publish GitHub Pages site
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   upload:
@@ -11,15 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: yaml-yugi
-      - uses: actions/checkout@v4
-        with:
-          path: aggregate
-          ref: aggregate
-      - run: cp aggregate/* yaml-yugi/data && rm -rf yaml-yugi/data/limit-regulation/ocg
+          sparse-checkout: data/**/*.vector.json
+          sparse-checkout-cone-mode: false
       - uses: actions/upload-pages-artifact@v2
         with:
-          path: yaml-yugi/data
+          path: data
   deploy-pages:
     needs: upload
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
@@ -32,5 +29,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/configure-pages@v3
       - uses: actions/deploy-pages@v2
         id: deployment

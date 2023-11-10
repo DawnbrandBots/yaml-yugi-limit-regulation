@@ -12,6 +12,8 @@ jobs:
   tcg:
     name: Download TCG Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.commit.outputs.status }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,12 +23,15 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn
       - run: yarn download-tcg
-      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+      - id: commit
+        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download TCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   ocg:
     name: Download OCG Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.commit.outputs.status }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,12 +42,15 @@ jobs:
       - run: yarn
       - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
       - run: yarn download-ocg /tmp/cards.json --recent
-      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+      - id: commit
+        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download OCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   rush:
     name: Download Rush Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.commit.outputs.status }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,12 +61,15 @@ jobs:
       - run: yarn
       - run: curl -fsSLo /tmp/rush.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/rush.json
       - run: yarn download-rush /tmp/rush.json
-      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+      - id: commit
+        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download Rush Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   master-duel:
     name: Transform Master Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.commit.outputs.status }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -85,7 +96,12 @@ jobs:
         run: python ../../src/masterduel-extract-transform.py ../../../yaml-yugipedia/wikitext/master-duel-limit-regulation
       - working-directory: yaml-yugi-limit-regulation
         run: yarn transform-md /tmp/cards.json
-      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+      - id: commit
+        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
+  publish:
+    needs: [tcg, ocg, rush, master-duel]
+    if: needs.*.outputs.status > 0 && !cancelled()
+    uses: ./.github/workflows/publish.yaml
