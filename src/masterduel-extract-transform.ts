@@ -20,11 +20,12 @@ import * as fs from "fs";
         if (file.endsWith(".name.json")) {
             const name = file.slice(0, 10);
             const raw = JSON.parse(await fs.promises.readFile(file, { encoding: "utf-8" }));
-            const vector = Object.fromEntries(
+            const regulation = Object.fromEntries(
                 Object.entries(raw).map(([name, limit]) => ([enNameToKonamiID.get(name), limit]))
             );
             const vectorFile = `${name}.vector.json`;
-            await fs.promises.writeFile(vectorFile, JSON.stringify(vector, null, 2) + "\n");
+            const result = { date: name, regulation };
+            await fs.promises.writeFile(vectorFile, JSON.stringify(result, null, 2) + "\n");
             const date = new Date(name);
             if (date < today && date > effectiveDate) {
                 effectiveDate = date;

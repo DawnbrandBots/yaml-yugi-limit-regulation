@@ -8,3 +8,5 @@ collection of Forbidden & Limited Lists and Limit Regulations, found under [`/da
 
 The remaining files — the actual source code of this stage of the pipeline — are available under the
 GNU Affero General Public License 3.0 or later. See [COPYING](./COPYING) for more details.
+
+2022-05-23 is actually 2022-05-17
