@@ -25,25 +25,27 @@ async function transformFLList(key: string = "current"): Promise<Date> {
 	const request = await fetch(`https://www.yugioh-card.com/eu/_data/fllists/${key}.json`);
 	const data = JSON.parse(request.body);
 	const [day, month, year] = data.from.split("/");
-	const rawPromise = fs.promises.writeFile(`${year}-${month}-${day}.raw.json`, request.body);
+	const date = `${year}-${month}-${day}`;
+	const rawPromise = fs.promises.writeFile(`${date}.raw.json`, request.body);
 
 	function extractId(card: Record<string, string>): string {
 		const url = new URL(card.link);
 		// The null case should never happen
 		return url.searchParams.get("cid") ?? card.nameeng;
 	}
-	
-	const result: Record<string, 0 | 1 | 2> = {};
+
+	const regulation: Record<string, 0 | 1 | 2> = {};
 	for (const card of data["0"] ?? []) {
-		result[extractId(card)] = 0;
+		regulation[extractId(card)] = 0;
 	}
 	for (const card of data["1"] ?? []) {
-		result[extractId(card)] = 1;
+		regulation[extractId(card)] = 1;
 	}
 	for (const card of data["2"] ?? []) {
-		result[extractId(card)] = 2;
+		regulation[extractId(card)] = 2;
 	}
-	const vectorPromise = fs.promises.writeFile(`${year}-${month}-${day}.vector.json`, `${JSON.stringify(result, null, 2)}\n`);
+    const result = { date, regulation };
+	const vectorPromise = fs.promises.writeFile(`${date}.vector.json`, `${JSON.stringify(result, null, 2)}\n`);
 
 	await Promise.all([rawPromise, vectorPromise]);
 	return new Date(year, month - 1, day);
