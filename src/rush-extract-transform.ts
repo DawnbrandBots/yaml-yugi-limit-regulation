@@ -68,13 +68,15 @@ async function transformToKonamiIDs(
     console.log(`Forbidden: ${forbiddenIds}`);
     console.log(`Limited: ${limitedIds}`);
     console.log(`Semi-Limited: ${semilimitedIds}`);
-    const vector = Object.fromEntries([
+    const regulation = Object.fromEntries([
         ...forbiddenIds.map(id => [id, 0]),
         ...limitedIds.map(id => [id, 1]),
         ...semilimitedIds.map(id => [id, 2]),
     ]);
-    const file = date.toISOString().split("T")[0] + ".vector.json";
-    await fs.writeFileSync(file, JSON.stringify(vector, null, 2) + "\n");
+    const dateString = date.toISOString().split("T")[0];
+    const result = { date: dateString, regulation };
+    const file = dateString + ".vector.json";
+    await fs.writeFileSync(file, JSON.stringify(result, null, 2) + "\n");
     return file;
 }
 
