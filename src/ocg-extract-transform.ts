@@ -64,9 +64,9 @@ const fetch = got.extend({ timeout: 10000, hooks: {
 } });
 
 (async () => {
-    let recentTwoOnly = process.argv.length >= 2;
+    let recentTwoOnly = process.argv.length >= 4;
     const jaBaseToKonamiID = new Map();
-    if (recentTwoOnly) {
+    if (process.argv.length >= 3) {
         const cards = JSON.parse(await fs.promises.readFile(process.argv[2], { encoding: "utf-8" }));
         for (const card of cards) {
             if (card.konami_id && card.name.ja) {
@@ -92,39 +92,39 @@ const fetch = got.extend({ timeout: 10000, hooks: {
     }
     const files = await Promise.all(hkDates.map(async yyyymm => {
         const date = new Date(Math.floor(yyyymm / 100), yyyymm % 100 - 1, 1);
-        const file = `${date.toISOString().split("T")[0]}.vector.json`;
+        const dateString = date.toISOString().split("T")[0];
+        const file = `${dateString}.vector.json`;
         if (!fs.existsSync(`${yyyymm}.csv`)) {
             const response = await fetch(`https://www.yugioh-card.com/hk/data/forbidden_card_lists/${yyyymm}.csv`);
             // CSVs 202104 and prior are encoded in Shift_JIS rather than Unicode
             await fs.promises.writeFile(`${yyyymm}.csv`, response.rawBody);
-            if (recentTwoOnly) {
-                const vector: Record<string, number> = {};
-                const lines = response.body.split("\n");
-                for (const line of lines) {
-                    if (line[0] === "$" || line[0] === "," || !line.trim().length) {
-                        continue;
+            const regulation: Record<string, number> = {};
+            const lines = response.body.split("\n");
+            for (const line of lines) {
+                if (line[0] === "$" || line[0] === "," || !line.trim().length) {
+                    continue;
+                }
+                const [limitLabel, , ja] = line.split(",");
+                const limit = LIMITS[limitLabel];
+                if (limit < 3) {
+                    const fullwidth = toFullWidth(ja);
+                    let kid = jaBaseToKonamiID.get(fullwidth);
+                    if (!kid) {
+                        // Workaround for The Tyrant Neptune
+                        kid = jaBaseToKonamiID.get(fullwidth.replaceAll("\u0020", "\u3000"));
                     }
-                    const [limitLabel, , ja] = line.split(",");
-                    const limit = LIMITS[limitLabel];
-                    if (limit < 3) {
-                        const fullwidth = toFullWidth(ja);
-                        let kid = jaBaseToKonamiID.get(fullwidth);
-                        if (!kid) {
-                            // Workaround for The Tyrant Neptune
-                            kid = jaBaseToKonamiID.get(fullwidth.replaceAll("\u0020", "\u3000"));
-                        }
-                        if (kid) {
-                            vector[kid] = limit;
-                            console.log(`${yyyymm}: [${ja}] limit [${limit}] Konami ID [${kid}]`);
-                        } else {
-                            console.log(`${yyyymm}: [${ja}] limit [${limit}] Konami ID not found`);
-                        }
+                    if (kid) {
+                        regulation[kid] = limit;
+                        console.log(`${yyyymm}: [${ja}] limit [${limit}] Konami ID [${kid}]`);
                     } else {
-                        console.log(`${yyyymm}: Skip [${limitLabel}] [${ja}]`);
+                        console.log(`${yyyymm}: [${ja}] limit [${limit}] Konami ID not found`);
                     }
-                    await fs.promises.writeFile(file, JSON.stringify(vector, null, 2) + "\n");
+                } else {
+                    console.log(`${yyyymm}: Skip [${limitLabel}] [${ja}]`);
                 }
             }
+            const result = { date: dateString, regulation };
+            await fs.promises.writeFile(file, JSON.stringify(result, null, 2) + "\n");
         }
         return { date, file };
     }));

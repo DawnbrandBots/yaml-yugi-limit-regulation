@@ -36,7 +36,7 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn
       - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
-      - run: yarn download-ocg /tmp/cards.json
+      - run: yarn download-ocg /tmp/cards.json --recent
       - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download OCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
