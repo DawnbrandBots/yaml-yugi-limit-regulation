@@ -21,7 +21,7 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn
       - run: yarn download-tcg
-      - uses: ./.github/actions/commit-push
+      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download TCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   ocg:
@@ -37,7 +37,7 @@ jobs:
       - run: yarn
       - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
       - run: yarn download-ocg /tmp/cards.json
-      - uses: ./.github/actions/commit-push
+      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download OCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   rush:
@@ -53,7 +53,7 @@ jobs:
       - run: yarn
       - run: curl -fsSLo /tmp/rush.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/rush.json
       - run: yarn download-rush /tmp/rush.json
-      - uses: ./.github/actions/commit-push
+      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Download Rush Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   master-duel:
@@ -81,11 +81,11 @@ jobs:
       - working-directory: yaml-yugi
         run: yarn
       - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
-      - working-directory: yaml-yugi/data/limit-regulation/master-duel
-        run: python ../../../src/limit-regulation/masterduel-extract-transform.py ../../../../yaml-yugipedia/wikitext/master-duel-limit-regulation
+      - working-directory: yaml-yugi/data/master-duel
+        run: python ../../src/masterduel-extract-transform.py ../../../yaml-yugipedia/wikitext/master-duel-limit-regulation
       - working-directory: yaml-yugi
         run: yarn transform-md /tmp/cards.json
-      - uses: ./yaml-yugi/.github/actions/commit-push
+      - uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
         with:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi
