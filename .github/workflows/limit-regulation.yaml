@@ -93,7 +93,7 @@ jobs:
         run: yarn
       - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
       - working-directory: yaml-yugi-limit-regulation/data/master-duel
-        run: python ../../src/masterduel-extract-transform.py ../../../yaml-yugipedia/wikitext/master-duel-limit-regulation
+        run: python ../../src/masterduel-extract-transform.py '../../../yaml-yugipedia/wikitext/Yu-Gi-Oh!_Master_Duel_Forbidden_%26_Limited_Lists'
       - working-directory: yaml-yugi-limit-regulation
         run: yarn transform-md /tmp/cards.json
       - id: commit
