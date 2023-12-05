@@ -13,7 +13,7 @@ jobs:
     name: Download TCG Forbidden & Limited Lists
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ steps.commit.outputs.status }}
+      committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,14 +24,14 @@ jobs:
       - run: yarn
       - run: yarn download-tcg
       - id: commit
-        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+        uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download TCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   ocg:
     name: Download OCG Forbidden & Limited Lists
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ steps.commit.outputs.status }}
+      committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -43,14 +43,14 @@ jobs:
       - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
       - run: yarn download-ocg /tmp/cards.json --recent
       - id: commit
-        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+        uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download OCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   rush:
     name: Download Rush Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ steps.commit.outputs.status }}
+      committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -62,14 +62,14 @@ jobs:
       - run: curl -fsSLo /tmp/rush.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/rush.json
       - run: yarn download-rush /tmp/rush.json
       - id: commit
-        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+        uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download Rush Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   master-duel:
     name: Transform Master Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ steps.commit.outputs.status }}
+      committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -97,7 +97,7 @@ jobs:
       - working-directory: yaml-yugi-limit-regulation
         run: yarn transform-md /tmp/cards.json
       - id: commit
-        uses: DawnbrandBots/yaml-yugi/.github/actions/commit-push@master
+        uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
@@ -105,9 +105,9 @@ jobs:
     needs: [tcg, ocg, rush, master-duel]
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ needs.*.outputs }}
-      - run: echo ${{ needs.*.outputs.status }}
+      - run: echo '${{ toJson(needs.*.outputs.committed) }}'
+      - run: echo '${{ contains(needs.*.outputs.committed, 1) }}'
   publish:
     needs: [tcg, ocg, rush, master-duel]
-    if: needs.*.outputs.status > 0 && !cancelled()
+    if: contains(needs.*.outputs.committed, 1) && !cancelled()
     uses: ./.github/workflows/publish.yaml
