@@ -101,6 +101,12 @@ jobs:
         with:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
+  test:
+    needs: [tcg, ocg, rush, master-duel]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ needs.*.outputs }}
+      - run: echo ${{ needs.*.outputs.status }}
   publish:
     needs: [tcg, ocg, rush, master-duel]
     if: needs.*.outputs.status > 0 && !cancelled()
