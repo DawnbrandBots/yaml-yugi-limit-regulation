@@ -14,7 +14,7 @@ jobs:
         with:
           sparse-checkout: data/**/*.vector.json
           sparse-checkout-cone-mode: false
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: data
   deploy-pages:
