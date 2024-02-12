@@ -8,7 +8,7 @@ fastjsonschema==2.19.1
     # via -r requirements.in
 regex==2023.10.3
     # via wikitextparser
-ruamel-yaml==0.18.5
+ruamel-yaml==0.18.6
     # via -r requirements.in
 ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
