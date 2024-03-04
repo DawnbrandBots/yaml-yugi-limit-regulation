@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2022–2023 Kevin Lu
+// SPDX-FileCopyrightText: © 2022–2024 Kevin Lu
 // SPDX-Licence-Identifier: AGPL-3.0-or-later
 
 import * as fs from "fs";
@@ -67,4 +67,8 @@ async function transformFLList(key: string = "current"): Promise<Date> {
 	console.log(`Currently effective: ${currentFile}. Most recent: ${recentFile}`);
 	await fs.promises.unlink("current.vector.json").catch(console.error);
 	await fs.promises.symlink(`${currentFile}.vector.json`, "current.vector.json");
+    await fs.promises.unlink("upcoming.vector.json").catch(console.error);
+    if (recentFile !== currentFile) {
+        await fs.promises.symlink(`${recentFile}.vector.json`, "upcoming.vector.json");
+    }
 })();

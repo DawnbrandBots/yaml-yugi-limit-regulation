@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2023 Kevin Lu
+// SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
 // SPDX-Licence-Identifier: AGPL-3.0-or-later
 
 import * as fs from "fs";
@@ -134,5 +134,9 @@ const fetch = got.extend({ timeout: 10000, hooks: {
         console.log(`Currently effective: ${currentFile.date}. Most recent: ${files[0].date}`);
         await fs.promises.unlink("current.vector.json").catch(console.error);
         await fs.promises.symlink(currentFile.file, "current.vector.json");
+        await fs.promises.unlink("upcoming.vector.json").catch(console.error);
+        if (files[0].file !== currentFile.file) {
+            await fs.promises.symlink(files[0].file, "upcoming.vector.json");
+        }
     }
 })();

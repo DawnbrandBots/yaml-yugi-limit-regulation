@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2023 Kevin Lu
+// SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
 // SPDX-Licence-Identifier: AGPL-3.0-or-later
 
 import * as fs from "fs";
@@ -15,6 +15,8 @@ import * as fs from "fs";
     const today = new Date();
     let effectiveDate = new Date(0);
     let current = "";
+    let mostRecentDate = new Date(0);
+    let recent = "";
     const files = await fs.promises.readdir(".");
     for (const file of files) {
         if (file.endsWith(".name.json")) {
@@ -31,9 +33,17 @@ import * as fs from "fs";
                 effectiveDate = date;
                 current = vectorFile;
             }
+            if (date > mostRecentDate) {
+                mostRecentDate = date;
+                recent = vectorFile;
+            }
         }
     }
-    console.log(`Currently effective: ${effectiveDate}`);
+    console.log(`Currently effective: ${effectiveDate}. Most recent: ${mostRecentDate}`);
     await fs.promises.unlink("current.vector.json").catch(console.error);
     await fs.promises.symlink(current, "current.vector.json");
+    await fs.promises.unlink("upcoming.vector.json").catch(console.error);
+    if (recent !== current) {
+        await fs.promises.symlink(recent, "upcoming.vector.json");
+    }
 })();
