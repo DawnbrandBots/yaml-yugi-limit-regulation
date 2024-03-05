@@ -17,6 +17,9 @@ that game version.
 - Rush Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json
 - Master Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json
 
+If a newer list has been announced but it is not yet the effective date, then an upcoming.vector.json symlink will be
+present in that data subdirectory alongside current.vector.json.
+
 The TCG list effective 2022-05-23 was actually effective [2022-05-17](https://yugipedia.com/wiki/May_2022_Lists_(TCG)),
 but Konami retconned this in its reported data at some point for some unknown reason. Fetch history:
 - https://github.com/DawnbrandBots/yaml-yugi/commits/master/data/limit-regulation/tcg/2022-05-17.raw.json
