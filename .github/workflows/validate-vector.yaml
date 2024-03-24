@@ -3,7 +3,7 @@
 name: Validate vector.json
 on:
   push:
-    branches: [test_validate_vector]
+    branches: [master]
     paths:
       - .github/workflows/validate-vector.yaml
       - src/validate.py
