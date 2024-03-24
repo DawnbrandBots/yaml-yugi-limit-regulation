@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: © 2024 Kevin Lu
+# SPDX-Licence-Identifier: AGPL-3.0-or-later
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/raw/master/src/vector.schema.yaml
+title: YAML Yugi limit regulation vectors
+description: Yu-Gi-Oh! limit regulations, stored as a mapping from Konami ID to the number allowed per deck
+type: object
+properties:
+  date:
+    description: When this limit regulation became effective
+    type: string
+  regulation:
+    description: The effective regulations, as a mapping from Konami ID to the number allowed per deck
+    type: object
+    patternProperties:  # ex: "4023": 1
+      "^[0-9]+$":
+        enum:
+          - 0
+          - 1
+          - 2
+    additionalProperties: false
+additionalProperties: false
+required: [date, regulation]
