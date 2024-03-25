@@ -8,7 +8,7 @@ type: object
 properties:
   date:
     description: When this limit regulation became effective
-    type: string
+    type: date
   regulation:
     description: The effective regulations, as a mapping from Konami ID to the number allowed per deck
     type: object
