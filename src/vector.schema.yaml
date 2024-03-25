@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: © 2024 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
-$schema: https://json-schema.org/draft/2020-12/schema
+$schema: https://json-schema.org/draft-07/schema  # at this time, fastjsonschema only supports draft-04, 06, 07
 $id: https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/raw/master/src/vector.schema.yaml
 title: YAML Yugi limit regulation vectors
 description: Yu-Gi-Oh! limit regulations, stored as a mapping from Konami ID to the number allowed per deck
