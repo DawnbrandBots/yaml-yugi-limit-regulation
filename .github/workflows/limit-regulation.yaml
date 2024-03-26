@@ -107,6 +107,9 @@ jobs:
     steps:
       - run: echo '${{ toJson(needs.*.outputs.committed) }}'
       - run: echo '${{ contains(needs.*.outputs.committed, 1) }}'
+  validate:
+    needs: test
+    uses: ./.github/workflows/validate-vector.yaml
   publish:
     needs: [tcg, ocg, rush, master-duel]
     if: contains(needs.*.outputs.committed, 1) && !cancelled()

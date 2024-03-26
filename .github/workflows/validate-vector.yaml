@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: © 2024 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
-name: Validate vector.json
+name: Validate *.vector.json
 on:
   push:
     branches: [master]
@@ -9,16 +9,16 @@ on:
       - src/validate.py
       - data/**
   pull_request:
-    branches:
-      - master
+    branches: [master]
     paths:
       - .github/workflows/validate-vector.yaml
       - src/validate.py
       - data/**
   workflow_dispatch:
+  workflow_call:
 jobs:
   validate-vector:
-    name: Validate vector.json
+    name: Validate *.vector.json
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
