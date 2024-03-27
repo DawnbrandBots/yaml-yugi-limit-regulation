@@ -14,9 +14,10 @@ that game version.
 - Master Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json
 
 If a newer list has been announced but it is not yet the effective date, then an upcoming.vector.json symlink will be
-present in that data subdirectory alongside current.vector.json.
+present in that data subdirectory alongside current.vector.json. All served vector JSONs are guaranteed to conform to
+[the JSON schema](src/vector.schema.yaml), and this is validated after every daily download.
 
-The remaining files — the actual source code of this stage of the pipeline — are available under the
+The remaining files outside of `/data` — the actual source code of this stage of the pipeline — are available under the
 GNU Affero General Public License 3.0 or later. See [COPYING](./COPYING) for more details.
 
 [![Download Forbidden & Limited Lists](https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/actions/workflows/limit-regulation.yaml/badge.svg)](https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/actions/workflows/limit-regulation.yaml)
