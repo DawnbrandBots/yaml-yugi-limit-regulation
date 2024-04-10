@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2023 Kevin Lu
+# SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 name: Download Forbidden & Limited Lists
 on:
@@ -40,7 +40,7 @@ jobs:
           cache: yarn
           cache-dependency-path: yarn.lock
       - run: yarn
-      - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
+      - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
       - run: yarn download-ocg /tmp/cards.json --recent
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
@@ -59,7 +59,7 @@ jobs:
           cache: yarn
           cache-dependency-path: yarn.lock
       - run: yarn
-      - run: curl -fsSLo /tmp/rush.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/rush.json
+      - run: curl -fsSLo /tmp/rush.json https://dawnbrandbots.github.io/yaml-yugi/rush.json
       - run: yarn download-rush /tmp/rush.json
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
@@ -91,7 +91,7 @@ jobs:
           cache-dependency-path: yaml-yugi-limit-regulation/yarn.lock
       - working-directory: yaml-yugi-limit-regulation
         run: yarn
-      - run: curl -fsSLo /tmp/cards.json https://github.com/DawnbrandBots/yaml-yugi/raw/aggregate/cards.json
+      - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
       - working-directory: yaml-yugi-limit-regulation/data/master-duel
         run: python ../../src/masterduel-extract-transform.py '../../../yaml-yugipedia/wikitext/Yu-Gi-Oh!_Master_Duel_Forbidden_%26_Limited_Lists'
       - working-directory: yaml-yugi-limit-regulation
