@@ -121,7 +121,7 @@ jobs:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
   test:
-    needs: [tcg, ocg, rush, master-duel]
+    needs: [tcg, ocg, ocg-ae, rush, master-duel]
     runs-on: ubuntu-latest
     steps:
       - run: echo '${{ toJson(needs.*.outputs.committed) }}'
@@ -130,6 +130,6 @@ jobs:
     needs: test
     uses: ./.github/workflows/validate-vector.yaml
   publish:
-    needs: [tcg, ocg, rush, master-duel]
+    needs: [tcg, ocg, ocg-ae, rush, master-duel]
     if: contains(needs.*.outputs.committed, 1) && !cancelled()
     uses: ./.github/workflows/publish.yaml

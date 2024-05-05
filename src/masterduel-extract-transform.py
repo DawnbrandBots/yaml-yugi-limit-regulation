@@ -34,7 +34,9 @@ if __name__ == "__main__":
                 if template.name.strip() == "Master Duel Limitation status list":
                     for argument in template.arguments:
                         if argument.name.strip() == "date":
-                            effective_date = datetime.strptime(argument.value.strip(), "%B %d, %Y")
+                            effective_date = datetime.strptime(
+                                argument.value.strip(), "%B %d, %Y"
+                            )
                         if argument.name.strip() == "cards":
                             for line in argument.value.strip().split("\n"):
                                 name, regulation = line.split("; ")

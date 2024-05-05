@@ -34,7 +34,9 @@ if __name__ == "__main__":
             effective_date = None
             for argument in template.arguments:
                 if argument.name.strip() == "effective_date":
-                    effective_date = datetime.strptime(argument.value.strip(), "%B %d, %Y")
+                    effective_date = datetime.strptime(
+                        argument.value.strip(), "%B %d, %Y"
+                    )
             if effective_date is None:
                 print(f"No date for: {filepath}")
                 continue
