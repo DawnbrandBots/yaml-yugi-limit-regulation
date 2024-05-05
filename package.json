@@ -8,6 +8,7 @@
   "scripts": {
     "download-tcg": "cd data/tcg && ts-node ../../src/tcg-extract-transform.ts",
     "download-ocg": "cd data/ocg && ts-node ../../src/ocg-extract-transform.ts",
+    "download-ocg-ae": "cd data/ocg-ae && ts-node ../../src/ocg-extract-transform.ts --region ae",
     "download-rush": "cd data/rush && ts-node ../../src/rush-extract-transform.ts",
     "transform-md": "cd data/master-duel && ts-node ../../src/masterduel-extract-transform.ts"
   },
@@ -16,6 +17,7 @@
     "yarn": "1.22.x"
   },
   "dependencies": {
+    "commander": "^12.0.0",
     "css-select": "^5.1.0",
     "got": "^11.8.6",
     "htmlparser2": "^9.1.0"

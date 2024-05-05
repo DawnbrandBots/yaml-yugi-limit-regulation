@@ -6,6 +6,7 @@ import got from "got";
 import { parseDocument } from "htmlparser2";
 import type { Element } from "domhandler";
 import { selectAll } from "css-select";
+import { Option, program } from "commander";
 
 // YAML Yugi uses fullwidth versions of ASCII characters, while the CSV uses halfwidth.
 // YAML Yugi: The Tyrant Neptune uses fullwidth spaces, while everything else uses halfwidth spaces.
@@ -55,6 +56,16 @@ const LIMITS: Record<string, number> = {
     "解除": 3
 };
 
+const INDEX_PHP: Record<string, string> = {
+    jp: "forbidden_cardlist",
+    ae: "forbidden_cardlist_aen"
+};
+
+const CSV_DIR: Record<string, string> = {
+    jp: "forbidden_card_lists",
+    ae: "forbidden_card_lists_aen"
+};
+
 const fetch = got.extend({ timeout: 10000, hooks: {
 	beforeRequest: [
 		request => {
@@ -63,27 +74,54 @@ const fetch = got.extend({ timeout: 10000, hooks: {
 	],
 } });
 
+program
+    .argument("<cards.json>", "Path to YAML Yugi cards.json")
+    .option("--recent", "Only download and convert the most recent two lists")
+    .addOption(new Option("--region [code]", "Target OCG regional list")
+        .choices(["jp", "ae"])
+        .default("jp"))
+    .parse();
+
 (async () => {
-    let recentTwoOnly = process.argv.length >= 4;
-    const jaBaseToKonamiID = new Map();
-    if (process.argv.length >= 3) {
-        const cards = JSON.parse(await fs.promises.readFile(process.argv[2], { encoding: "utf-8" }));
-        for (const card of cards) {
-            if (card.konami_id && card.name.ja) {
+    const { recent: recentTwoOnly, region } = program.opts<{ recent: boolean, region: "jp" | "ae" }>();
+    const jaBaseToKonamiID = new Map<string, number>();
+    const enToKonamiId = new Map<string, number>();
+    const cards = JSON.parse(await fs.promises.readFile(program.args[0], { encoding: "utf-8" }));
+    for (const card of cards) {
+        if (card.konami_id) {
+            if (card.name.ja) {
                 jaBaseToKonamiID.set(
                     card.name.ja.includes("<ruby>") ? extractBaseTextFromRuby(card.name.ja) : card.name.ja,
                     card.konami_id
                 );
             }
+            if (card.name.en) {
+                enToKonamiId.set(card.name.en, card.konami_id);
+            }
         }
     }
+    const konamiId = {
+        jp: (name: string) => {
+            const fullwidth = toFullWidth(name);
+            let kid = jaBaseToKonamiID.get(fullwidth);
+            if (!kid) {
+                // Workaround for The Tyrant Neptune
+                kid = jaBaseToKonamiID.get(fullwidth.replaceAll("\u0020", "\u3000"));
+            }
+            return kid;
+        },
+        // Workaround for Amazoness Archer (Updated from: Amazon Archer)
+        ae: (name: string) => enToKonamiId.get(name.split(" (")[0])
+    };
 
 	// const jpIndex = await fetch("https://www.yugioh-card.com/japan/event/rankingduel/limitregulation/");
     // const jpHtml = parseDocument(jpIndex.body);
     // const jpLinks = selectAll("a.event", jpHtml as unknown as Element);
     // const jpDates = jpLinks.map(element => parseInt(element.attribs.href.slice(6)));
 
-    const hkIndex = await fetch("https://www.yugioh-card.com/hk/event/rules_guides/forbidden_cardlist.php");
+    const hkIndexPhp = INDEX_PHP[region];
+    const hkCsvDir = CSV_DIR[region];
+    const hkIndex = await fetch(`https://www.yugioh-card.com/hk/event/rules_guides/${hkIndexPhp}.php`);
     const hkHtml = parseDocument(hkIndex.body);
     const hkLinks = selectAll("a.to_event", hkHtml as unknown as Element);
     let hkDates = hkLinks.map(element => parseInt(element.attribs.href.slice(6)));
@@ -95,7 +133,7 @@ const fetch = got.extend({ timeout: 10000, hooks: {
         const dateString = date.toISOString().split("T")[0];
         const file = `${dateString}.vector.json`;
         if (!fs.existsSync(`${yyyymm}.csv`)) {
-            const response = await fetch(`https://www.yugioh-card.com/hk/data/forbidden_card_lists/${yyyymm}.csv`);
+            const response = await fetch(`https://www.yugioh-card.com/hk/data/${hkCsvDir}/${yyyymm}.csv`);
             // CSVs 202104 and prior are encoded in Shift_JIS rather than Unicode
             await fs.promises.writeFile(`${yyyymm}.csv`, response.rawBody);
             const regulation: Record<string, number> = {};
@@ -104,23 +142,18 @@ const fetch = got.extend({ timeout: 10000, hooks: {
                 if (line[0] === "$" || line[0] === "," || !line.trim().length) {
                     continue;
                 }
-                const [limitLabel, , ja] = line.split(",");
+                const [limitLabel, , name] = line.split(",");
                 const limit = LIMITS[limitLabel];
                 if (limit < 3) {
-                    const fullwidth = toFullWidth(ja);
-                    let kid = jaBaseToKonamiID.get(fullwidth);
-                    if (!kid) {
-                        // Workaround for The Tyrant Neptune
-                        kid = jaBaseToKonamiID.get(fullwidth.replaceAll("\u0020", "\u3000"));
-                    }
+                    const kid = konamiId[region](name);
                     if (kid) {
                         regulation[kid] = limit;
-                        console.log(`${yyyymm}: [${ja}] limit [${limit}] Konami ID [${kid}]`);
+                        console.log(`${yyyymm}: [${name}] limit [${limit}] Konami ID [${kid}]`);
                     } else {
-                        console.log(`${yyyymm}: [${ja}] limit [${limit}] Konami ID not found`);
+                        console.log(`${yyyymm}: [${name}] limit [${limit}] Konami ID not found`);
                     }
                 } else {
-                    console.log(`${yyyymm}: Skip [${limitLabel}] [${ja}]`);
+                    console.log(`${yyyymm}: Skip [${limitLabel}] [${name}]`);
                 }
             }
             const result = { date: dateString, regulation };

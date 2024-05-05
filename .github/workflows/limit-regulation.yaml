@@ -46,6 +46,25 @@ jobs:
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download OCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
+  ocg-ae:
+    name: Download OCG Asian-English Forbidden & Limited Lists
+    runs-on: ubuntu-latest
+    outputs:
+      committed: ${{ steps.commit.outputs.committed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - run: yarn
+      - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
+      - run: yarn download-ocg-ae /tmp/cards.json --recent
+      - id: commit
+        uses: DawnbrandBots/.github/actions/commit-push@main
+        with:
+          message: "Download OCG-AE Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   rush:
     name: Download Rush Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
