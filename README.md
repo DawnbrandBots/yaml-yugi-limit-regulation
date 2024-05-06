@@ -10,6 +10,7 @@ that game version.
 
 - TCG: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/tcg/current.vector.json
 - OCG: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg/current.vector.json
+- OCG-AE (Asian-English): https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg-ae/current.vector.json
 - Rush Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json
 - Master Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json
 
@@ -23,6 +24,10 @@ GNU Affero General Public License 3.0 or later. See [COPYING](./COPYING) for mor
 [![Download Forbidden & Limited Lists](https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/actions/workflows/limit-regulation.yaml/badge.svg)](https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/actions/workflows/limit-regulation.yaml)
 
 ## Notes
+
+The TCG list is sourced from the European site. Therefore, the [April 2024 list](https://yugipedia.com/wiki/April_2024_Lists_(TCG))
+is effective 2024-04-22, the EMEA+OC date, instead of the AMER date of 2024-04-15. See [#33](https://github.com/DawnbrandBots/yaml-yugi-limit-regulation/issues/33)
+to track how to account for TCG regional differences.
 
 The TCG list effective 2022-05-23 was actually effective [2022-05-17](https://yugipedia.com/wiki/May_2022_Lists_(TCG)),
 but Konami retconned this in its reported data at some point for some unknown reason. Fetch history:
