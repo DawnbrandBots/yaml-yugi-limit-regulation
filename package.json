@@ -9,6 +9,7 @@
     "download-tcg": "cd data/tcg && ts-node ../../src/tcg-extract-transform.ts",
     "download-ocg": "cd data/ocg && ts-node ../../src/ocg-extract-transform.ts",
     "download-ocg-ae": "cd data/ocg-ae && ts-node ../../src/ocg-extract-transform.ts --region ae",
+    "download-ocg-sc": "cd data/ocg-sc && ts-node ../../src/ocg-sc-extract-transform.ts",
     "download-rush": "cd data/rush && ts-node ../../src/rush-extract-transform.ts",
     "transform-md": "cd data/master-duel && ts-node ../../src/masterduel-extract-transform.ts"
   },
