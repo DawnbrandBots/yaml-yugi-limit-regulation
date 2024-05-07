@@ -65,8 +65,8 @@ jobs:
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download OCG-AE Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
-  ocg-sc:
-    name: Download OCG Simplified Chinese Forbidden & Limited Lists
+  ocg-cn:
+    name: Download OCG China Forbidden & Limited Lists
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
@@ -79,11 +79,11 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn
       - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
-      - run: yarn download-ocg-sc /tmp/cards.json
+      - run: yarn download-ocg-cn /tmp/cards.json
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
-          message: "Download OCG-SC Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
+          message: "Download OCG China Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
   rush:
     name: Download Rush Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
@@ -140,7 +140,7 @@ jobs:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
   test:
-    needs: [tcg, ocg, ocg-ae, ocg-sc, rush, master-duel]
+    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, master-duel]
     runs-on: ubuntu-latest
     steps:
       - run: echo '${{ toJson(needs.*.outputs.committed) }}'
@@ -149,6 +149,6 @@ jobs:
     needs: test
     uses: ./.github/workflows/validate-vector.yaml
   publish:
-    needs: [tcg, ocg, ocg-ae, ocg-sc, rush, master-duel]
+    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, master-duel]
     if: contains(needs.*.outputs.committed, 1) && !cancelled()
     uses: ./.github/workflows/publish.yaml

@@ -11,7 +11,7 @@ that game version.
 - TCG: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/tcg/current.vector.json
 - OCG: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg/current.vector.json
 - OCG-AE (Asian-English): https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg-ae/current.vector.json
-- OCG-SC (Simplified Chinese): https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg-sc/current.vector.json
+- OCG China: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg-cn/current.vector.json
 - Rush Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json
 - Master Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json
 
