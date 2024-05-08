@@ -4,8 +4,16 @@ name: Lint
 on:
   push:
     branches: [master]
+    paths:
+      - .github/workflows/python.yml
+      - src/requirements*
+      - "**.py"
   pull_request:
     branches: [master]
+    paths:
+      - .github/workflows/python.yml
+      - src/requirements*
+      - "**.py"
 jobs:
   # https://github.com/DataDog/guarddog
   guarddog:
