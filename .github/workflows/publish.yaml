@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref_name }}
           sparse-checkout: data/**/*.vector.json
           sparse-checkout-cone-mode: false
       - uses: actions/upload-pages-artifact@v3
