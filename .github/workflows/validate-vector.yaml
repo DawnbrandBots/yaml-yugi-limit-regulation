@@ -8,12 +8,14 @@ on:
       - .github/workflows/validate-vector.yaml
       - src/validate.py
       - data/**
+      - src/requirements*
   pull_request:
     branches: [master]
     paths:
       - .github/workflows/validate-vector.yaml
       - src/validate.py
       - data/**
+      - src/requirements*
   workflow_dispatch:
   workflow_call:
 jobs:
