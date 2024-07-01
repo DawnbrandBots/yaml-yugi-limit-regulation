@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
-    concurrency: ${{ github.workflow }}-download
+    concurrency:
+      group: ${{ github.workflow }}-download
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,7 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
-    concurrency: ${{ github.workflow }}-download
+    concurrency:
+      group: ${{ github.workflow }}-download
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,7 +57,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
-    concurrency: ${{ github.workflow }}-download
+    concurrency:
+      group: ${{ github.workflow }}-download
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -73,7 +79,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
-    concurrency: ${{ github.workflow }}-download
+    concurrency:
+      group: ${{ github.workflow }}-download
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -93,7 +101,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
-    concurrency: ${{ github.workflow }}-download
+    concurrency:
+      group: ${{ github.workflow }}-download
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -113,7 +123,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
-    concurrency: ${{ github.workflow }}-download
+    concurrency:
+      group: ${{ github.workflow }}-download
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
         with:
