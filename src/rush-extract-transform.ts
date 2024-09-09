@@ -84,7 +84,7 @@ async function transformToKonamiIDs(
     const rush = JSON.parse(await fs.promises.readFile(process.argv[2], { encoding: "utf-8" }));
     const setNumberToCard = new Map();
     for (const card of rush) {
-        for (const set of card.sets.ja) {
+        for (const set of (card.sets?.ja ?? [])) {
             setNumberToCard.set(set.set_number, card);
         }
     }
