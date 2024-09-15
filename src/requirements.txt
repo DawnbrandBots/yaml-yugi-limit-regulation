@@ -6,7 +6,7 @@
 #
 fastjsonschema==2.20.0
     # via -r requirements.in
-regex==2024.7.24
+regex==2024.9.11
     # via wikitextparser
 ruamel-yaml==0.18.6
     # via -r requirements.in
