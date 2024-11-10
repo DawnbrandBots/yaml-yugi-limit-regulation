@@ -14,7 +14,7 @@
     "transform-md": "cd data/master-duel && ts-node ../../src/masterduel-extract-transform.ts"
   },
   "engines": {
-    "node": ">=20",
+    "node": ">=22",
     "yarn": "1.22.x"
   },
   "dependencies": {
@@ -24,7 +24,7 @@
     "htmlparser2": "^9.1.0"
   },
   "devDependencies": {
-    "@alphakretin/essentials": "^6.2.0"
+    "@alphakretin/essentials": "^7.0.0"
   },
   "eslintConfig": {
     "extends": "@alphakretin"
