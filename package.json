@@ -18,10 +18,10 @@
     "yarn": "1.22.x"
   },
   "dependencies": {
-    "commander": "^12.1.0",
+    "commander": "^13.0.0",
     "css-select": "^5.1.0",
     "got": "^11.8.6",
-    "htmlparser2": "^9.1.0"
+    "htmlparser2": "^10.0.0"
   },
   "devDependencies": {
     "@alphakretin/essentials": "^7.0.0"
