@@ -39,7 +39,7 @@ if __name__ == "__main__":
                             )
                         if argument.name.strip() == "cards":
                             for line in argument.value.strip().split("\n"):
-                                name, regulation = line.split("; ")
+                                name, regulation, *_ = line.split("; ")
                                 regulation = regulation.strip()
                                 if regulation == "Forbidden":
                                     limit_regulation[name] = 0
