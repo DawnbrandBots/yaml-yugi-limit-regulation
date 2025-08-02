@@ -26,6 +26,9 @@
   "devDependencies": {
     "@alphakretin/essentials": "^7.1.0"
   },
+  "resolutions": {
+    "@types/node": "^22.15.32"
+  },
   "eslintConfig": {
     "extends": "@alphakretin"
   },
