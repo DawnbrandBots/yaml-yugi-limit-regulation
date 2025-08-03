@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "download-tcg": "cd data/tcg && ts-node ../../src/tcg-extract-transform.ts",
-    "download-ocg": "cd data/ocg && ts-node ../../src/ocg-extract-transform.ts",
+    "download-ocg": "cd data/ocg && ts-node ../../src/ocg-extract-transform-2025.ts",
     "download-ocg-ae": "cd data/ocg-ae && ts-node ../../src/ocg-ae-extract-transform.ts",
     "download-ocg-cn": "cd data/ocg-cn && ts-node ../../src/ocg-cn-extract-transform.ts",
     "download-rush": "cd data/rush && ts-node ../../src/rush-extract-transform.ts",

@@ -63,7 +63,7 @@ interface RegulationMap {
 
     // Also https://www.yugioh-card.com/asia//play/forbidden-and-limited-list/, but it's not accurate for Japan
     const response = await fetch("https://www.yugioh-card.com/asia//play/forbidden-and-limited-card-list-ae/");
-    await fs.promises.writeFile("raw.html", response.body);
+    await fs.promises.writeFile("raw.html", response.rawBody);
     const cardDataJSON = response.body.split("const cardData = ")[1].split(";\n")[0];
     await fs.promises.writeFile("cardData.json", cardDataJSON);
 
@@ -76,7 +76,7 @@ interface RegulationMap {
     const effectiveLists = cardData.en.effective_dates.sort(
         (a, b) => b.effective_date_name.getTime() - a.effective_date_name.getTime()
     );
-    const outputFilesByDate = [];
+    const files = [];
     for (const effectiveList of effectiveLists) {
         const date = effectiveList.effective_date_name.toISOString().split("T")[0];
         console.log(date);
@@ -96,7 +96,7 @@ interface RegulationMap {
             }
             const result = { date, regulation };
             const file = `${date}.vector.json`;
-            outputFilesByDate.push({ date: effectiveList.effective_date_name, file });
+            files.push({ date: effectiveList.effective_date_name, file });
             await fs.promises.writeFile(file, `${JSON.stringify(result, null, 2)}\n`);
         } else {
             console.log(`${date}: no AE list`);
@@ -104,13 +104,12 @@ interface RegulationMap {
     }
 
     // Current Forbidden & Limited List can only be one of the two most recent (most recent may yet to be effective)
-    const currentFile = outputFilesByDate[0].date < new Date() ? outputFilesByDate[0].file : outputFilesByDate[1].file;
-    const recentFile = outputFilesByDate[0].file;
-    console.log(`Currently effective: ${currentFile}. Most recent: ${recentFile}`);
+    const currentFile = files[0].date < new Date() ? files[0] : files[1];
+    console.log(`Currently effective: ${currentFile.date}. Most recent: ${files[0].date}`);
     await fs.promises.unlink("current.vector.json").catch(console.error);
-    await fs.promises.symlink(currentFile, "current.vector.json");
+    await fs.promises.symlink(currentFile.file, "current.vector.json");
     await fs.promises.unlink("upcoming.vector.json").catch(console.error);
-    if (recentFile !== currentFile) {
-        await fs.promises.symlink(recentFile, "upcoming.vector.json");
+    if (files[0].file !== currentFile.file) {
+        await fs.promises.symlink(files[0].file, "upcoming.vector.json");
     }
 })();

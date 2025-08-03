@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
+# SPDX-FileCopyrightText: © 2023–2025 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 name: Download Forbidden & Limited Lists
 on:
@@ -41,7 +41,7 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn
       - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
-      - run: yarn download-ocg /tmp/cards.json --recent
+      - run: yarn download-ocg /tmp/cards.json
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
@@ -60,7 +60,7 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn
       - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
-      - run: yarn download-ocg-ae /tmp/cards.json --recent
+      - run: yarn download-ocg-ae /tmp/cards.json
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
