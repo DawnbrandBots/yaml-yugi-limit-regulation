@@ -15,7 +15,7 @@ jobs:
           ref: ${{ github.ref_name }}
           sparse-checkout: data/**/*.vector.json
           sparse-checkout-cone-mode: false
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: data
   deploy-pages:
