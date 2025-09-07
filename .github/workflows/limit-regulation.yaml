@@ -116,7 +116,7 @@ jobs:
         with:
           repository: DawnbrandBots/yaml-yugipedia
           path: yaml-yugipedia
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
