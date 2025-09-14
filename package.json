@@ -18,7 +18,7 @@
     "yarn": "1.22.x"
   },
   "dependencies": {
-    "commander": "^14.0.0",
+    "commander": "^14.0.1",
     "css-select": "^6.0.0",
     "got": "^11.8.6",
     "htmlparser2": "^9.1.0"
