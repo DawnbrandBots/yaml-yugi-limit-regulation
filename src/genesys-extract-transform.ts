@@ -28,14 +28,21 @@ function parseCell(td: Element) {
     return td.children[0].data;
 }
 
-async function hasChanged(newVectorJSON: string) {
+async function hasChanged(rawJSON: string) {
     try {
-        const oldVectorJSON = await fs.promises.readFile("current.vector.json", { encoding: "utf-8" });
-        return oldVectorJSON !== newVectorJSON;
+        const oldRawJSON = await fs.promises.readFile("current.raw.json", { encoding: "utf-8" });
+        return oldRawJSON !== rawJSON;
     } catch (e) {
         console.warn(e);
         return true;
     }
+}
+
+async function writeSymlink(content: string, file: string, symlink: string) {
+    console.log(`Writing out ${file} as ${symlink}`);
+    await fs.promises.writeFile(file, content);
+    await fs.promises.unlink(symlink).catch(console.error);
+    await fs.promises.symlink(file, symlink);
 }
 
 (async () => {
@@ -73,13 +80,9 @@ async function hasChanged(newVectorJSON: string) {
     const date = new Date().toISOString().split("T")[0];
     const result = { date, regulation };
     const vectorJSON = JSON.stringify(result, null, 2) + "\n";
-    if (await hasChanged(vectorJSON)) {
-        await fs.promises.writeFile(`${date}.raw.json`, rawJSON);
-        const newFile = `${date}.vector.json`;
-        console.log(`Writing out ${newFile} as current.vector.json`);
-        await fs.promises.writeFile(newFile, vectorJSON);
-        await fs.promises.unlink("current.vector.json").catch(console.error);
-        await fs.promises.symlink(newFile, "current.vector.json");
+    if (await hasChanged(rawJSON)) {
+        writeSymlink(rawJSON, `${date}.raw.json`, "current.raw.json");
+        writeSymlink(vectorJSON, `${date}.vector.json`, "current.vector.json");
     } else {
         console.log("No changes.");
     }
