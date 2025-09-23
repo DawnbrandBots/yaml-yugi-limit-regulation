@@ -6,7 +6,6 @@ import got from "got";
 import { ElementType, parseDocument } from "htmlparser2";
 import { Element, NodeWithChildren } from "domhandler";
 import { selectAll, selectOne } from "css-select";
-import { resourceLimits } from "worker_threads";
 
 const fetch = got.extend({
     timeout: 10000,

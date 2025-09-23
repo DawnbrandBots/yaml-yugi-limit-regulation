@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2024 Kevin Lu
+# SPDX-FileCopyrightText: © 2024–2025 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 import fastjsonschema
 import json
@@ -13,6 +13,8 @@ if __name__ == "__main__":
 
     vector_files = []
     for root, dirs, files in os.walk("data"):
+        if root.endswith("genesys"):
+            continue
         for file in files:
             if re.search(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}\.vector\.json$", file):
                 vector_files.append(os.path.join(root, file))
