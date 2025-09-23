@@ -11,6 +11,7 @@
     "download-ocg-ae": "cd data/ocg-ae && ts-node ../../src/ocg-ae-extract-transform.ts",
     "download-ocg-cn": "cd data/ocg-cn && ts-node ../../src/ocg-cn-extract-transform.ts",
     "download-rush": "cd data/rush && ts-node ../../src/rush-extract-transform.ts",
+    "download-genesys": "cd data/genesys && ts-node ../../src/genesys-extract-transform.ts",
     "transform-md": "cd data/master-duel && ts-node ../../src/masterduel-extract-transform.ts"
   },
   "engines": {

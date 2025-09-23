@@ -13,6 +13,7 @@ that game version.
 - OCG-AE (Asian-English): https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg-ae/current.vector.json
 - OCG China: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/ocg-cn/current.vector.json
 - Rush Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/rush/current.vector.json
+- TCG Genesys: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/genesys/current.vector.json
 - Master Duel: https://dawnbrandbots.github.io/yaml-yugi-limit-regulation/master-duel/current.vector.json
 
 If a newer list has been announced but it is not yet the effective date, then an upcoming.vector.json symlink will be
