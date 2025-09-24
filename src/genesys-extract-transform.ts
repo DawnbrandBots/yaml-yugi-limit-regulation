@@ -48,7 +48,7 @@ async function writeSymlink(content: string, file: string, symlink: string) {
         console.error(response);
         process.exit(2);
     }
-    const regulation = Object.fromEntries(response.Result.Results.map((card: any) => [card.Id, card.Points]));
+    const regulation = Object.fromEntries(response.Result.Results.map((card: any) => [card.KonamiId, card.Points]));
     const date = new Date().toISOString().split("T")[0];
     const result = { date, regulation };
     const vectorJSON = JSON.stringify(result, null, 2) + "\n";
