@@ -116,8 +116,7 @@ jobs:
           cache: yarn
           cache-dependency-path: yarn.lock
       - run: yarn
-      - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
-      - run: yarn download-genesys /tmp/cards.json
+      - run: yarn download-genesys
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:

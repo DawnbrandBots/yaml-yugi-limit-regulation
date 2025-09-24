@@ -3,12 +3,9 @@
 
 import * as fs from "fs";
 import got from "got";
-import { ElementType, parseDocument } from "htmlparser2";
-import { Element, NodeWithChildren } from "domhandler";
-import { selectAll, selectOne } from "css-select";
 
 const fetch = got.extend({
-    timeout: 10000,
+    timeout: 20000,
     hooks: {
         beforeRequest: [
             request => {
@@ -18,19 +15,9 @@ const fetch = got.extend({
     }
 });
 
-function parseCell(td: Element) {
-    if (!td.children.length) {
-        throw new Error("td has no children");
-    }
-    if (td.children[0].type !== ElementType.Text) {
-        throw new Error("td is not text");
-    }
-    return td.children[0].data;
-}
-
 async function hasChanged(rawJSON: string) {
     try {
-        const oldRawJSON = await fs.promises.readFile("current.raw.json", { encoding: "utf-8" });
+        const oldRawJSON = await fs.promises.readFile("current.vector.json", { encoding: "utf-8" });
         return oldRawJSON !== rawJSON;
     } catch (e) {
         console.warn(e);
@@ -46,42 +33,27 @@ async function writeSymlink(content: string, file: string, symlink: string) {
 }
 
 (async () => {
-    const enToKonamiId = new Map<string, number>();
-    const cards = JSON.parse(await fs.promises.readFile(process.argv[2], { encoding: "utf-8" }));
-    for (const card of cards) {
-        if (card.konami_id) {
-            if (card.name.en) {
-                enToKonamiId.set(card.name.en, card.konami_id);
-            }
-        }
+    const response = await fetch("https://registration.yugioh-card.com/genesys/CardListSearch/PointsList", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "resultsPerPage=20000&currentPage=1"
+    }).json<any>();
+    if (response.Success !== "Success") {
+        console.error(response);
+        process.exit(1);
     }
-
-    function getKonamiId(name: string) {
-        const kid = enToKonamiId.get(name);
-        if (kid) {
-            console.log(`[${name}] Konami ID [${kid}]`);
-            return kid;
-        } else {
-            console.log(`[${name}] Konami ID not found`);
-            return name;
-        }
+    if (response.Result.TotalResults > response.Result.ResultsPerPage || response.Result.TotalPages > 1) {
+        console.error(response);
+        process.exit(2);
     }
-
-    const response = await fetch("https://www.yugioh-card.com/en/genesys/");
-    await fs.promises.writeFile("genesys.html", response.rawBody);
-    const html = parseDocument(response.body);
-    const table = selectOne<NodeWithChildren, Element>("#tablepress-genesys > tbody", html);
-    if (!table) {
-        throw new Error("Main table not found");
-    }
-    const rows = selectAll("tr", table).map(tr => selectAll("td", tr).map(parseCell));
-    const rawJSON = JSON.stringify(Object.fromEntries(rows), null, 2) + "\n";
-    const regulation = Object.fromEntries(rows.map(([name, points]) => [getKonamiId(name), Number(points)]));
+    const regulation = Object.fromEntries(response.Result.Results.map((card: any) => [card.Id, card.Points]));
     const date = new Date().toISOString().split("T")[0];
     const result = { date, regulation };
     const vectorJSON = JSON.stringify(result, null, 2) + "\n";
-    if (await hasChanged(rawJSON)) {
-        writeSymlink(rawJSON, `${date}.raw.json`, "current.raw.json");
+    if (await hasChanged(vectorJSON)) {
+        writeSymlink(JSON.stringify(response, null, 2) + "\n", `${date}.raw.json`, "current.raw.json");
         writeSymlink(vectorJSON, `${date}.vector.json`, "current.vector.json");
     } else {
         console.log("No changes.");
