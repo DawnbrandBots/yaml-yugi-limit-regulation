@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
+// SPDX-FileCopyrightText: © 2023–202 Kevin Lu
 // SPDX-Licence-Identifier: AGPL-3.0-or-later
 
 import * as fs from "fs";
@@ -23,7 +23,7 @@ import * as fs from "fs";
             const name = file.slice(0, 10);
             const raw = JSON.parse(await fs.promises.readFile(file, { encoding: "utf-8" }));
             const regulation = Object.fromEntries(
-                Object.entries(raw).map(([name, limit]) => ([enNameToKonamiID.get(name), limit]))
+                Object.entries(raw).map(([name, limit]) => ([enNameToKonamiID.get(name.replace("＜", "<").replace("＞", ">")), limit]))
             );
             const vectorFile = `${name}.vector.json`;
             const result = { date: name, regulation };
