@@ -36,14 +36,14 @@
 	<link href="/japan/assets/lib/jquery.colorbox_k.css" rel="stylesheet">
 	<script src="/japan/assets/lib/modernizr-custom.js"></script> 
 	
-	<script src="/japan/assets/js/script.js?d=1104"></script>
-	<link href="/japan/assets/css/common.css?d=1104" rel="stylesheet">
-	<script src="/japan/assets/js/header.js?d=1104"></script>
-	<link href="/japan/assets/css/header.css?d=1104" rel="stylesheet">
-	<link href="/japan/assets/css/style.css?d=1104" rel="stylesheet">
-	<link href="/japan/assets/css/footer.css?d=1104" rel="stylesheet">
+	<script src="/japan/assets/js/script.js?d=1121"></script>
+	<link href="/japan/assets/css/common.css?d=1121" rel="stylesheet">
+	<script src="/japan/assets/js/header.js?d=1121"></script>
+	<link href="/japan/assets/css/header.css?d=1121" rel="stylesheet">
+	<link href="/japan/assets/css/style.css?d=1121" rel="stylesheet">
+	<link href="/japan/assets/css/footer.css?d=1121" rel="stylesheet">
 	
-	<link href="/japan/event/css/style.css?d=1104" rel="stylesheet">
+	<link href="/japan/event/css/style.css?d=1121" rel="stylesheet">
 	
 
 
@@ -135,7 +135,7 @@
 				<div class="quick-link">
 					<ul>
 						<li><a href="/japan/event/limitregulation/" title="リミットレギュレーション">リミットレギュレーション</a></li>
-						<li><a href="/japan/notice/revision/" title="ルール改訂に伴う変更">ルール改訂に伴う変更</a></li>
+						<li><a href="/japan/revision/" title="ルール改訂に伴う変更">ルール改訂に伴う変更</a></li>
 						<li><a href="/japan/notice/information/?retailer" title="取り扱い店舗リスト">取り扱い店舗リスト</a></li>
 					</ul>
 				</div>
@@ -200,13 +200,18 @@
 	<div id="cardsearch" class="cardsearch-box">
 		<h3>カード検索</h3>
 		<a href="https://www.db.yugioh-card.com/yugiohdb/"><img src="/japan/assets/images/logo-neurondb.png" alt=""></a>
+		<ul>
+			<li id="navcs" class="now"><span>カード検索</span></li>
+			<li id="navqs"><span>Q&amp;A検索</span></li>
+		</ul>
+		<div id="csearch">
 		<form action="https://www.db.yugioh-card.com/yugiohdb/card_search.action" target="_blank" method="get" accept-charset="UTF-8">
-			<input type="text" name="keyword" id="cskeyword" value="">
+			<input type="text" name="keyword" id="cskeyword" value="キーワードを入力">
 			<input type="button" id="cskeywordclear" value="" title="キーワードを削除">
 			<select name="stype" id="stype">
-				<option value="1">カード名で検索</option>
-				<option value="2">カードテキストで検索</option>
-				<option value="3">ペンデュラム効果で検索</option>
+				<option value="1">「カード名」検索</option>
+				<option value="2">「カードテキスト」検索</option>
+				<option value="3">「ペンデュラム効果」検索</option>
 			</select>
 			<select name="ctype" id="ctype">
 				<option value="0">全てのカード</option>
@@ -218,6 +223,20 @@
 			<input type="hidden" name="sess" value="1">
 			<input type="button" id="cssubmit" value="検索" title="カード検索">
 		</form>
+		</div>
+		
+		<div id="qsearch">
+		<form action="https://www.db.yugioh-card.com/yugiohdb/faq_search.action" target="_blank" method="get" accept-charset="UTF-8">
+			<input type="text" name="keyword" id="qskeyword" value="キーワードを入力">
+			<input type="button" id="qskeywordclear" value="" title="キーワードを削除">
+			<select name="ope" id="qtype">
+				<option value="2">「Q&amp;Aテキスト」検索</option>
+				<option value="1">「カード名」検索</option>
+			</select>
+			<input type="button" id="qssubmit" value="検索" title="Q&amp;A検索">
+		</form>
+		</div>
+		
 	</div>
 	</div>
 
@@ -1139,32 +1158,33 @@
 	
 	<div class="related-banner fixed">
 		<ul>
-			<li><a href="https://www.konami.com/yugioh/point/" target="_blank"><img src="/japan/images/banner/fixed/cg-point.jpg" alt=""><dl><dt>カードゲームポイント</dt><dd>お買い物でポイントを貯めて特別なアイテムと交換！</dd></dl></a></li>
-			<li><a href="https://www.db.yugioh-card.com/yugiohdb/faq_search.action" target="_blank"><img src="/japan/images/banner/fixed/rule-qa.jpg" alt=""><dl><dt>ルールＱ＆Ａ</dt><dd>遊戯王OCGのよくある質問をチェック！</dd></dl></a></li>
-			<li><a href="https://x.com/yugioh_ocg_info" target="_blank"><img src="/japan/images/banner/fixed/x.jpg" alt=""><dl><dt>遊戯王OCG 公式X</dt><dd>商品・イベント等の公式情報を発信！</dd></dl></a></li>
-			<li><a href="https://www.youtube.com/user/yugiohOCGch?sub_confirmation=1" target="_blank"><img src="/japan/images/banner/fixed/youtube.jpg" alt=""><dl><dt>遊戯王OCGチャンネル</dt><dd>デッキ紹介やCMなど公式動画をチェック！</dd></dl></a></li>
-			<li><a href="https://www.tiktok.com/@yugioh_cardgame_official" target="_blank"><img src="/japan/images/banner/fixed/tiktok.jpg" alt=""><dl><dt>遊戯王カードゲームTiktok</dt><dd>Tiktokで動画を楽しもう！</dd></dl></a></li>
-			<li><a href="https://www.twitch.tv/officialyugiohcardgame" target="_blank"><img src="/japan/images/banner/fixed/twitch.jpg" alt=""><dl><dt>公式遊戯王カードゲームtwicth</dt><dd>遊戯王カードゲームの様々な配信が楽しめる</dd></dl></a></li>
+			<li><a href="https://www.konami.com/yugioh/point/" target="_blank"><img src="/japan/assets/banner/fixed/cg-point.jpg" alt=""><dl><dt>カードゲームポイント</dt><dd>お買い物でポイントを貯めて特別なアイテムと交換！</dd></dl></a></li>
+			<li><a href="https://x.com/yugioh_ocg_info" target="_blank"><img src="/japan/assets/banner/fixed/x.jpg" alt=""><dl><dt>遊戯王OCG 公式X</dt><dd>商品・イベント等の公式情報を発信！</dd></dl></a></li>
+			<li><a href="https://www.youtube.com/user/yugiohOCGch?sub_confirmation=1" target="_blank"><img src="/japan/assets/banner/fixed/youtube.jpg" alt=""><dl><dt>遊戯王OCGチャンネル</dt><dd>デッキ紹介やCMなど公式動画をチェック！</dd></dl></a></li>
+			<li><a href="https://www.tiktok.com/@yugioh_cardgame_official" target="_blank"><img src="/japan/assets/banner/fixed/tiktok.jpg" alt=""><dl><dt>遊戯王カードゲームTiktok</dt><dd>Tiktokで動画を楽しもう！</dd></dl></a></li>
+			<li><a href="https://www.twitch.tv/officialyugiohcardgame" target="_blank"><img src="/japan/assets/banner/fixed/twitch.jpg" alt=""><dl><dt>公式遊戯王カードゲームtwicth</dt><dd>遊戯王カードゲームの様々な配信が楽しめる</dd></dl></a></li>
+			<li><a href="https://www.instagram.com/yugioh_cardgame_official_jpn/" target="_blank"><img src="/japan/assets/banner/fixed/instagram.jpg" alt=""><dl><dt>公式遊戯王カードゲームInstagram</dt><dd>遊戯王カードゲームのアートや世界観をご紹介</dd></dl></a></li>
 		</ul>
 	</div>	
 	
 	<div class="related-banner other">
 		<ul>
-			<li><a href="https://www.konami.com/yugioh/neuron/ja/" target="_blank"><img src="/japan/images/banner/other/neuron.jpg" alt="遊戯王ニューロン デュエリストをサポートする便利機能を多数搭載！"></a></li>
-			<li><a href="https://www.konami.com/yugioh/duel_links/ja/" target="_blank"><img src="/japan/images/banner/other/duellinks.jpg" alt="遊戯王 デュエルリンクス スマートフォンでデュエル！"></a></li>
-			<li><a href="https://www.konami.com/yugioh/masterduel/jp/ja/" target="_blank"><img src="/japan/images/banner/other/masterduel.jpg" alt="遊戯王マスターデュエル 「遊戯王」を本格デジタルカードゲームへ！"></a></li>
-			<li><a href="https://www.konami.com/yugioh/rushduel" target="_blank"><img src="/japan/images/banner/other/rushduel.jpg" alt="遊戯王ラッシュデュエル 速攻で熱狂！カードバトル"></a></li>
-			<li><a href="https://www.konami.com/yugioh/earlydayscollection/jp/ja/" target="_blank"><img src="/japan/images/banner/other/earlydayscollection.jpg" alt="遊戯王デジタルゲームの初期タイトルを複数収録した『遊戯王 アーリーデイズコレクション』登場"></a></li>
-			<li><a href="https://www.konami.com/yugioh/rushduel_game_gorush" target="_blank"><img src="/japan/images/banner/other/rushduel_game_gorush.jpg" alt="遊戯王ラッシュデュエル 最強バトルロイヤル!! いくぞ!ゴーラッシュ!! 盛り上がり度、最強％ いつでも！どこでも！カードバトル"></a></li>
+			<li><a href="https://www.konami.com/yugioh/neuron/ja/" target="_blank"><img src="/japan/assets/banner/other/neuron.jpg" alt="遊戯王ニューロン"></a></li>
+			<li><a href="https://www.konami.com/yugioh/duel_links/ja/" target="_blank"><img src="/japan/assets/banner/other/duellinks.jpg" alt="遊戯王 デュエルリンクス"></a></li>
+			<li><a href="https://www.konami.com/yugioh/masterduel/jp/ja/" target="_blank"><img src="/japan/assets/banner/other/masterduel.jpg" alt="遊戯王マスターデュエル"></a></li>
+			<li><a href="https://www.konami.com/yugioh/rushduel" target="_blank"><img src="/japan/assets/banner/other/rushduel.jpg" alt="遊戯王ラッシュデュエル"></a></li>
+			<li><a href="https://www.konami.com/yugioh/earlydayscollection/jp/ja/" target="_blank"><img src="/japan/assets/banner/other/earlydayscollection.jpg" alt="遊戯王 アーリーデイズコレクション"></a></li>
+			<li><a href="https://www.konami.com/yugioh/rushduel_game_gorush" target="_blank"><img src="/japan/assets/banner/other/rushduel_game_gorush.jpg" alt="遊戯王ラッシュデュエル 最強バトルロイヤル!! いくぞ!ゴーラッシュ!!"></a></li>
 		</ul>	
 	</div>
 	
-	<div id="event_spots">
+	<div class="eventspots" id="event_spots">
 		<ul>
-			<li><a href="https://cardgame-network.konami.net/" target="_blank"><img src="/japan/images/banner/fixed/card_game_network.png" alt="コナミカードゲームネットワーク"></a></li>
-			<li><a href="https://www.konami.com/games/card/cgs/" target="_blank"><img src="/japan/images/banner/fixed/card_game_station.png" alt="コナミカードゲームステーション"></a></li>
-			<li><a href="https://www.konami.com/games/card/cgs/satellite/" target="_blank"><img src="/japan/images/banner/fixed/card_game_station_st.png" alt="コナミカードゲームステーション：サテライトショップ"></a></li>
-			<li><a href="https://www.konami.com/games/card/friendly_shop/" target="_blank"><img src="/japan/images/banner/fixed/konami_friendly_shop.png" alt="フレンドリーショップ"></a></li>
+			<li><a href="https://cardgame-network.konami.net/" target="_blank"><img src="/japan/assets/banner/fixed/card_game_network.png" alt="コナミカードゲームネットワーク"></a></li>
+			<li><a href="https://www.konami.com/games/card/cgs/" target="_blank"><img src="/japan/assets/banner/fixed/card_game_station.png" alt="コナミカードゲームステーション"></a></li>
+			<li><a href="https://www.konami.com/games/card/cgs/satellite/" target="_blank"><img src="/japan/assets/banner/fixed/card_game_station_st.png" alt="コナミカードゲームステーション：サテライトショップ"></a></li>
+			<li><a href="https://www.konami.com/games/card/friendly_shop/" target="_blank"><img src="/japan/assets/banner/fixed/konami_friendly_shop.png" alt="フレンドリーショップ"></a></li>
+	
 		</ul>
 	</div>
 <div class="contents-copyright"><small>&copy;スタジオ・ダイス／集英社・テレビ東京・KONAMI</small></div>
@@ -1184,10 +1204,10 @@
 					<a href="/japan/start/" class="start">はじめよう</a>
 					<a href="/japan/notice/" class="notice">おしらせ</a>
 					<ul>
-			<li class=""><a href="/japan/notice/#information">おしらせ</a></li>
-			<li class=""><a href="/japan/notice/#campaign">キャンペーン</a></li>
-			<li class=""><a href="/japan/notice/#notice">重要なお知らせ</a></li>
-			<li class=""><a href="/japan/notice/revision/">ルール改訂に伴う変更</a></li>
+			<li class=""><a href="/japan/news/#information">おしらせ</a></li>
+			<li class=""><a href="/japan/news/#campaign">キャンペーン</a></li>
+			<li class=""><a href="/japan/news/#important">重要なお知らせ</a></li>
+			<li class=""><a href="/japan/news/#revision">ルール改訂に伴う変更</a></li>
 					</ul>
 				</div>
 				<div>
@@ -1266,6 +1286,7 @@
 		<a href="#" class="inpage fixed-pagetop">&nbsp;</a>
 </footer>
 
+<div class="cardzoom-hidden"><figure class="cardzoom" id="cardzoom"><img src="/japan/assets/prizes/card-np.jpg" alt=""></figure></div>
 </body>
 </html>
 
