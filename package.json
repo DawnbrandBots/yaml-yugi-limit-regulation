@@ -19,7 +19,7 @@
     "yarn": "1.22.x"
   },
   "dependencies": {
-    "commander": "^14.0.2",
+    "commander": "^14.0.3",
     "css-select": "^6.0.0",
     "got": "^11.8.6",
     "htmlparser2": "^9.1.0"
