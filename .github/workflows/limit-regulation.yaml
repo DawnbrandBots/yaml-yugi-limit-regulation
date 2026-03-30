@@ -24,8 +24,6 @@ jobs:
       - run: yarn
       - run: yarn download-tcg
       - id: commit
-        # Temporarily disabled: on March 18 e2cf9952e3e1d1d6ec4f853f7b3761b5b2f71678, content after 2024 was deleted from https://www.yugioh-card.com/eu/play/forbidden-and-limited-list/
-        if: false
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download TCG Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
