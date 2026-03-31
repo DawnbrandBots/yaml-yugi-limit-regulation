@@ -196,7 +196,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Crystron Halqifibrax",
             "namefra": "Halqifibrax Crystron",
             "nameger": "Kristron Halqifibrax",
@@ -677,7 +677,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Linkross",
             "namefra": "Croilien",
             "nameger": "Linkreuz",
@@ -789,7 +789,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Mecha Phantom Beast Auroradon",
             "namefra": "B\u00eate Fant\u00f4me M\u00e9ca Auroradon",
             "nameger": "Mecha-Phantomungeheuer Auroradon",
@@ -1046,7 +1046,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Prank-Kids Meow-Meow-Mu",
             "namefra": "Miaou-Miaou-Mu Farce-Gamins",
             "nameger": "Streichbuben Miau-Miau-Mu",
@@ -1062,7 +1062,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Predaplant Verte Anaconda",
             "namefra": "Anaconda Vert Pr\u00e9daplante",
             "nameger": "Raubpflanze Verte-Anakonda",
@@ -1206,7 +1206,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Simorgh, Bird of Sovereignty",
             "namefra": "Simorgh, Oiseau de la Souverainet\u00e9",
             "nameger": "Simorgh, Vogel der Oberherrschaft",
@@ -1494,7 +1494,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Union Carrier",
             "namefra": "Transporteur Union",
             "nameger": "Transportverbund",
@@ -2302,7 +2302,7 @@
             "namefra": "Divernosaure",
             "nameger": "Verschiedosaurier",
             "nameita": "Mistosauro",
-            "namespa": "Miscel\u00e1neosaurio",
+            "namespa": "Miscel\u00e1neousaurio",
             "link": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12763",
             "cid": "12763",
             "cardtypeeng": "Monster/Effect",

@@ -676,7 +676,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Linkross",
             "namefra": "Croilien",
             "nameger": "Linkreuz",
@@ -1492,7 +1492,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Union Carrier",
             "namefra": "Transporteur Union",
             "nameger": "Transportverbund",
@@ -2302,7 +2302,7 @@
             "namefra": "Divernosaure",
             "nameger": "Verschiedosaurier",
             "nameita": "Mistosauro",
-            "namespa": "Miscel\u00e1neosaurio",
+            "namespa": "Miscel\u00e1neousaurio",
             "link": "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=12763",
             "cid": "12763",
             "cardtypeeng": "Monster/Effect",
@@ -2409,7 +2409,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Prank-Kids Meow-Meow-Mu",
             "namefra": "Miaou-Miaou-Mu Farce-Gamins",
             "nameger": "Streichbuben Miau-Miau-Mu",

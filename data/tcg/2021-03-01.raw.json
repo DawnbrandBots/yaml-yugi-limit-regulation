@@ -660,7 +660,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Linkross",
             "namefra": "Croilien",
             "nameger": "Linkreuz",
@@ -1526,7 +1526,7 @@
         },
         {
             "frame": "Monster",
-            "icon": "Link",
+            "icon": "link",
             "nameeng": "Union Carrier",
             "namefra": "Transporteur Union",
             "nameger": "Transportverbund",
