@@ -5,17 +5,18 @@
   "author": "Kevin Lu",
   "license": "AGPL-3.0-or-later",
   "private": true,
+  "type": "module",
   "scripts": {
-    "download-tcg": "cd data/tcg && ts-node ../../src/tcg-extract-transform.ts",
-    "download-ocg": "cd data/ocg && ts-node ../../src/ocg-extract-transform-2025.ts",
-    "download-ocg-ae": "cd data/ocg-ae && ts-node ../../src/ocg-ae-extract-transform.ts",
-    "download-ocg-cn": "cd data/ocg-cn && ts-node ../../src/ocg-cn-extract-transform.ts",
-    "download-rush": "cd data/rush && ts-node ../../src/rush-extract-transform.ts",
-    "download-genesys": "cd data/genesys && ts-node ../../src/genesys-extract-transform.ts",
-    "transform-md": "cd data/master-duel && ts-node ../../src/masterduel-extract-transform.ts"
+    "download-tcg": "cd data/tcg && node ../../src/tcg-extract-transform.ts",
+    "download-ocg": "cd data/ocg && node ../../src/ocg-extract-transform-2025.ts",
+    "download-ocg-ae": "cd data/ocg-ae && node ../../src/ocg-ae-extract-transform.ts",
+    "download-ocg-cn": "cd data/ocg-cn && node ../../src/ocg-cn-extract-transform.ts",
+    "download-rush": "cd data/rush && node ../../src/rush-extract-transform.ts",
+    "download-genesys": "cd data/genesys && node ../../src/genesys-extract-transform.ts",
+    "transform-md": "cd data/master-duel && node ../../src/masterduel-extract-transform.ts"
   },
   "engines": {
-    "node": ">=22",
+    "node": ">=24",
     "yarn": "1.22.x"
   },
   "dependencies": {
@@ -25,10 +26,10 @@
     "htmlparser2": "^9.1.0"
   },
   "devDependencies": {
-    "@alphakretin/essentials": "^7.1.0"
+    "@alphakretin/essentials": "^8.0.0"
   },
   "resolutions": {
-    "@types/node": "^22.15.32"
+    "@types/node": "^24.12.2"
   },
   "eslintConfig": {
     "extends": "@alphakretin"
