@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: © 2023–2024 Kevin Lu
+// SPDX-FileCopyrightText: © 2023–2026 Kevin Lu
 // SPDX-Licence-Identifier: AGPL-3.0-or-later
 
 import * as fs from "fs";
@@ -7,7 +7,7 @@ import { ElementType, parseDocument } from "htmlparser2";
 import type { Element, NodeWithChildren } from "domhandler";
 import { selectAll, selectOne } from "css-select";
 
-const fetch = got.extend({ timeout: 10000, hooks: {
+const fetch = got.extend({ timeout: { request: 10000 }, hooks: {
 	beforeRequest: [
 		request => {
 			console.log(`Fetching ${request.url}`);
@@ -80,42 +80,40 @@ async function transformToKonamiIDs(
     return file;
 }
 
-(async () => {
-    const rush = JSON.parse(await fs.promises.readFile(process.argv[2], { encoding: "utf-8" }));
-    const setNumberToCard = new Map();
-    for (const card of rush) {
-        for (const set of (card.sets?.ja ?? [])) {
-            setNumberToCard.set(set.set_number, card);
-        }
+const rush = JSON.parse(await fs.promises.readFile(process.argv[2], { encoding: "utf-8" }));
+const setNumberToCard = new Map();
+for (const card of rush) {
+    for (const set of (card.sets?.ja ?? [])) {
+        setNumberToCard.set(set.set_number, card);
     }
+}
 
-    const main = await fetch("https://www.konami.com/yugioh/rushduel/howto/limitregulation/");
-    const html = parseDocument(main.body);
+const main = await fetch("https://www.konami.com/yugioh/rushduel/howto/limitregulation/");
+const html = parseDocument(main.body);
 
-    const dateHeadings = selectAll<NodeWithChildren, Element>("h3:has(+ table)", html);
-    const tables = selectAll<NodeWithChildren, Element>("h3 + table", html);
-    if (!dateHeadings.length) {
-        throw new Error("No h3 found");
-    }
-    if (!tables.length) {
-        throw new Error("No sibling table found");
-    }
-    if (dateHeadings.length !== tables.length) {
-        throw new Error("Mismatch between h3 and table counts");
-    }
-    const files = [];
-    for (let i = 0; i < tables.length; i++) {
-        const parsed = parseLimitRegulation(dateHeadings[i], tables[i]);
-        const file = await transformToKonamiIDs(parsed, setNumberToCard);
-        files.push({ date: parsed.date, file });
-    }
-    // Current Forbidden & Limited List can only be one of the two most recent (most recent may yet to be effective)
-    const currentFile = files[0].date < new Date() ? files[0] : files[1];
-    console.log(`Currently effective: ${currentFile.date}. Most recent: ${files[0].date}`);
-    await fs.promises.unlink("current.vector.json").catch(console.error);
-    await fs.promises.symlink(currentFile.file, "current.vector.json");
-    await fs.promises.unlink("upcoming.vector.json").catch(console.error);
-    if (files[0].file !== currentFile.file) {
-        await fs.promises.symlink(files[0].file, "upcoming.vector.json");
-    }
-})();
+const dateHeadings = selectAll<NodeWithChildren, Element>("h3:has(+ table)", html);
+const tables = selectAll<NodeWithChildren, Element>("h3 + table", html);
+if (!dateHeadings.length) {
+    throw new Error("No h3 found");
+}
+if (!tables.length) {
+    throw new Error("No sibling table found");
+}
+if (dateHeadings.length !== tables.length) {
+    throw new Error("Mismatch between h3 and table counts");
+}
+const files = [];
+for (let i = 0; i < tables.length; i++) {
+    const parsed = parseLimitRegulation(dateHeadings[i], tables[i]);
+    const file = await transformToKonamiIDs(parsed, setNumberToCard);
+    files.push({ date: parsed.date, file });
+}
+// Current Forbidden & Limited List can only be one of the two most recent (most recent may yet to be effective)
+const currentFile = files[0].date < new Date() ? files[0] : files[1];
+console.log(`Currently effective: ${currentFile.date}. Most recent: ${files[0].date}`);
+await fs.promises.unlink("current.vector.json").catch(console.error);
+await fs.promises.symlink(currentFile.file, "current.vector.json");
+await fs.promises.unlink("upcoming.vector.json").catch(console.error);
+if (files[0].file !== currentFile.file) {
+    await fs.promises.symlink(files[0].file, "upcoming.vector.json");
+}

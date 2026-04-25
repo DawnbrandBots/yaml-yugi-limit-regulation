@@ -1,10 +1,10 @@
-// SPDX-FileCopyrightText: © 2022–2024 Kevin Lu
+// SPDX-FileCopyrightText: © 2022–2026 Kevin Lu
 // SPDX-Licence-Identifier: AGPL-3.0-or-later
 
 import * as fs from "fs";
 import got from "got";
 
-const fetch = got.extend({ timeout: 10000, hooks: {
+const fetch = got.extend({ timeout: { request: 10000 }, hooks: {
 	beforeRequest: [
 		request => {
 			console.log(`Fetching ${request.url}`);
@@ -51,24 +51,22 @@ async function transformFLList(key: string = "current"): Promise<Date> {
 	return new Date(year, month - 1, day);
 }
 
-(async () => {
-	const optionsRequest = await fetch("https://www.yugioh-card.com/eu/_data/fllists/options.json");
-	await fs.promises.writeFile("options.json", optionsRequest.body);
-	const options = JSON.parse(optionsRequest.body);
-	const dates = await Promise.all([
-		transformFLList(),
-		// The keys are in order and numbers as strings. Skip the largest one as it corresponds to current and might not exist.
-		...Object.keys(options).reverse().slice(1).map(index => transformFLList(index))
-	]);
-	// Current Forbidden & Limited List can only be one of the two most recent (most recent may yet to be effective)
-	const currentListDate = dates[0] < new Date() ? dates[0] : dates[1];
-	const currentFile = currentListDate.toISOString().split("T")[0];
-	const recentFile = dates[0].toISOString().split("T")[0]
-	console.log(`Currently effective: ${currentFile}. Most recent: ${recentFile}`);
-	await fs.promises.unlink("current.vector.json").catch(console.error);
-	await fs.promises.symlink(`${currentFile}.vector.json`, "current.vector.json");
-    await fs.promises.unlink("upcoming.vector.json").catch(console.error);
-    if (recentFile !== currentFile) {
-        await fs.promises.symlink(`${recentFile}.vector.json`, "upcoming.vector.json");
-    }
-})();
+const optionsRequest = await fetch("https://www.yugioh-card.com/eu/_data/fllists/options.json");
+await fs.promises.writeFile("options.json", optionsRequest.body);
+const options = JSON.parse(optionsRequest.body);
+const dates = await Promise.all([
+    transformFLList(),
+    // The keys are in order and numbers as strings. Skip the largest one as it corresponds to current and might not exist.
+    ...Object.keys(options).reverse().slice(1).map(index => transformFLList(index))
+]);
+// Current Forbidden & Limited List can only be one of the two most recent (most recent may yet to be effective)
+const currentListDate = dates[0] < new Date() ? dates[0] : dates[1];
+const currentFile = currentListDate.toISOString().split("T")[0];
+const recentFile = dates[0].toISOString().split("T")[0]
+console.log(`Currently effective: ${currentFile}. Most recent: ${recentFile}`);
+await fs.promises.unlink("current.vector.json").catch(console.error);
+await fs.promises.symlink(`${currentFile}.vector.json`, "current.vector.json");
+await fs.promises.unlink("upcoming.vector.json").catch(console.error);
+if (recentFile !== currentFile) {
+    await fs.promises.symlink(`${recentFile}.vector.json`, "upcoming.vector.json");
+}
