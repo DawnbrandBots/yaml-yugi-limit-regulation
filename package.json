@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "commander": "^14.0.3",
-    "css-select": "^6.0.0",
-    "got": "^11.8.6",
-    "htmlparser2": "^9.1.0"
+    "css-select": "^7.0.0",
+    "got": "^15.0.3",
+    "htmlparser2": "^12.0.0"
   },
   "devDependencies": {
     "@alphakretin/essentials": "^8.0.0"
