@@ -12,6 +12,9 @@ jobs:
   tcg:
     name: Download TCG Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -30,6 +33,9 @@ jobs:
   ocg:
     name: Download OCG Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -49,6 +55,9 @@ jobs:
   ocg-ae:
     name: Download OCG Asian-English Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -68,6 +77,9 @@ jobs:
   ocg-cn:
     name: Download OCG China Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -87,6 +99,9 @@ jobs:
   rush:
     name: Download Rush Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -106,6 +121,9 @@ jobs:
   genesys:
     name: Download Genesys points list
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
@@ -124,6 +142,9 @@ jobs:
   master-duel:
     name: Transform Master Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
