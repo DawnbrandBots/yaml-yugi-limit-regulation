@@ -18,7 +18,7 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
@@ -39,7 +39,7 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
@@ -61,7 +61,7 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
@@ -83,7 +83,7 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
@@ -105,7 +105,7 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
@@ -127,7 +127,7 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
@@ -148,10 +148,10 @@ jobs:
     outputs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           path: yaml-yugi-limit-regulation
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: DawnbrandBots/yaml-yugipedia
           path: yaml-yugipedia
