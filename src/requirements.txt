@@ -14,5 +14,5 @@ ruamel-yaml-clib==0.2.15
     # via ruamel-yaml
 wcwidth==0.8.1
     # via wikitextparser
-wikitextparser==1.0.0
+wikitextparser==1.0.1
     # via -r requirements.in
