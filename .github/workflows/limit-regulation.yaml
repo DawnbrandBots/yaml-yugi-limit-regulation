@@ -19,7 +19,7 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: yarn
@@ -40,7 +40,7 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: yarn
@@ -62,7 +62,7 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: yarn
@@ -84,7 +84,7 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: yarn
@@ -106,7 +106,7 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: yarn
@@ -128,7 +128,7 @@ jobs:
       committed: ${{ steps.commit.outputs.committed }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
           cache: yarn
@@ -161,7 +161,7 @@ jobs:
           cache: pip
           cache-dependency-path: yaml-yugi-limit-regulation/src/requirements.txt
       - run: pip install -r yaml-yugi-limit-regulation/src/requirements.txt
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: yaml-yugi-limit-regulation/.node-version
           cache: yarn
