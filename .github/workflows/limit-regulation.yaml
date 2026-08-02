@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2023–2025 Kevin Lu
+# SPDX-FileCopyrightText: © 2023–2026 Kevin Lu
 # SPDX-Licence-Identifier: AGPL-3.0-or-later
 name: Download Forbidden & Limited Lists
 on:
@@ -139,6 +139,28 @@ jobs:
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download Genesys points list: ${{ github.run_number }} (${{ github.run_id }})"
+  ocg-genesys:
+    name: Download OCG Genesys points list
+    runs-on: ubuntu-latest
+    concurrency:
+      group: commit
+      queue: max
+    outputs:
+      committed: ${{ steps.commit.outputs.committed }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - run: yarn
+      - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
+      - run: yarn download-ocg-genesys /tmp/cards.json
+      - id: commit
+        uses: DawnbrandBots/.github/actions/commit-push@main
+        with:
+          message: "Download OCG Genesys points list: ${{ github.run_number }} (${{ github.run_id }})"
   master-duel:
     name: Transform Master Duel Forbidden & Limited Lists
     runs-on: ubuntu-latest
@@ -179,7 +201,7 @@ jobs:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
   test:
-    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, genesys, master-duel]
+    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, genesys, ocg-genesys, master-duel]
     runs-on: ubuntu-latest
     steps:
       - run: echo '${{ toJson(needs.*.outputs.committed) }}'
@@ -188,6 +210,6 @@ jobs:
     needs: test
     uses: ./.github/workflows/validate-vector.yaml
   publish:
-    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, genesys, master-duel]
+    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, genesys, ocg-genesys,master-duel]
     if: contains(needs.*.outputs.committed, 1) && !cancelled()
     uses: ./.github/workflows/publish.yaml
