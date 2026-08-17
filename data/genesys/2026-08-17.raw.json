@@ -1,0 +1,13 @@
+{
+  "Success": "Success",
+  "Warnings": [],
+  "Errors": [],
+  "Result": {
+    "TotalResults": 0,
+    "TotalPages": 0,
+    "ResultsPerPage": 20000,
+    "CurrentPage": 1,
+    "Results": []
+  },
+  "SuccessMessage": null
+}
