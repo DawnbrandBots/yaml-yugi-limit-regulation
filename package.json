@@ -23,7 +23,7 @@
   "dependencies": {
     "commander": "^15.0.0",
     "css-select": "^7.0.0",
-    "got": "^15.0.3",
+    "got": "^16.0.0",
     "htmlparser2": "^12.0.0"
   },
   "devDependencies": {
