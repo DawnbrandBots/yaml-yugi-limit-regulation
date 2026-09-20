@@ -118,8 +118,8 @@ jobs:
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
           message: "Download Rush Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
-  genesys:
-    name: Download Genesys points list
+  tcg-genesys:
+    name: Download TCG Genesys points list
     runs-on: ubuntu-latest
     concurrency:
       group: commit
@@ -134,11 +134,12 @@ jobs:
           cache: yarn
           cache-dependency-path: yarn.lock
       - run: yarn
-      - run: yarn download-genesys
+      - run: curl -fsSLo /tmp/cards.json https://dawnbrandbots.github.io/yaml-yugi/cards.json
+      - run: yarn download-tcg-genesys /tmp/cards.json
       - id: commit
         uses: DawnbrandBots/.github/actions/commit-push@main
         with:
-          message: "Download Genesys points list: ${{ github.run_number }} (${{ github.run_id }})"
+          message: "Download TCG Genesys points list: ${{ github.run_number }} (${{ github.run_id }})"
   ocg-genesys:
     name: Download OCG Genesys points list
     runs-on: ubuntu-latest
@@ -201,7 +202,7 @@ jobs:
           message: "Transform Master Duel Forbidden & Limited Lists: ${{ github.run_number }} (${{ github.run_id }})"
           working-directory: yaml-yugi-limit-regulation
   test:
-    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, genesys, ocg-genesys, master-duel]
+    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, tcg-genesys, ocg-genesys, master-duel]
     runs-on: ubuntu-latest
     steps:
       - run: echo '${{ toJson(needs.*.outputs.committed) }}'
@@ -210,6 +211,6 @@ jobs:
     needs: test
     uses: ./.github/workflows/validate-vector.yaml
   publish:
-    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, genesys, ocg-genesys,master-duel]
+    needs: [tcg, ocg, ocg-ae, ocg-cn, rush, tcg-genesys, ocg-genesys,master-duel]
     if: contains(needs.*.outputs.committed, 1) && !cancelled()
     uses: ./.github/workflows/publish.yaml
