@@ -30,7 +30,7 @@
     "@alphakretin/essentials": "^8.0.0"
   },
   "resolutions": {
-    "@types/node": "^24.19.0"
+    "@types/node": "^24.19.1"
   },
   "eslintConfig": {
     "extends": "@alphakretin"
